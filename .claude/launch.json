@@ -1,0 +1,26 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web-php",
+      "runtimeExecutable": "C:/xampp/php/php.exe",
+      "runtimeArgs": [
+        "-S",
+        "localhost:8000",
+        "-t",
+        "web"
+      ],
+      "port": 8000
+    },
+    {
+      "name": "nodered-simulado",
+      "runtimeExecutable": "C:/xampp/php/php.exe",
+      "runtimeArgs": [
+        "-S",
+        "127.0.0.1:1880",
+        "simulador/nodered_simulado.php"
+      ],
+      "port": 1880
+    }
+  ]
+}

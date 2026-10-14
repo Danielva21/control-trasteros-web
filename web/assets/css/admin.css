@@ -1,0 +1,779 @@
+/* =========================================================
+   admin.css — estilos SOLO del panel de administración (admin/)
+   Pensado primero para PC (el admin trabaja con ordenador).
+   La versión móvil irá al final, en un @media.
+   ========================================================= */
+
+
+/* ---------- 1. Estructura general ----------
+   Dos columnas: sidebar (ancho fijo) | zona principal (el resto).
+   display:flex las pone una al lado de la otra. */
+.admin {
+    display: flex;
+    min-height: 100vh;                /* como mínimo, todo el alto de la pantalla */
+}
+
+/* Zona principal: ocupa todo el ancho que deja el sidebar.
+   min-width: 0 → permite que se estreche si hace falta. Sin esto, una tabla
+   ancha empujaría la página hacia la derecha en vez de ajustarse. */
+.admin-principal {
+    flex-grow: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;           /* barra superior arriba, contenido debajo */
+}
+
+
+/* =========================================================
+   2. SIDEBAR (menú lateral oscuro)
+   ========================================================= */
+
+/* position: sticky + top: 0 + height: 100vh → el sidebar se queda quieto
+   ocupando todo el alto mientras el contenido de la derecha hace scroll.
+   overflow-y: auto → si el menú no cabe en alto, scroll solo dentro de él. */
+.sidebar {
+    width: 260px;
+    flex-shrink: 0;                   /* que no se estreche nunca */
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;           /* todo en columna: marca, grupos, enlaces */
+    gap: 4px;
+    background: var(--color-sidebar);
+    color: #D4D4D8;                   /* gris claro: se lee bien sobre el fondo oscuro */
+}
+
+
+/* ---------- 2.1 Marca: icono + nombre ---------- */
+.sidebar-marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 8px 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #2E2E33; /* línea separadora, un pelín más clara que el fondo */
+}
+
+/* Cuadrado índigo con el candado (como en el login, pero aquí login.css no se carga) */
+.sidebar .marca-icono {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--color-primario);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-marca-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-marca-nombre {
+    font-size: 15px;
+    font-weight: 800;
+    color: #FFFFFF;
+}
+
+.sidebar-marca-sub {
+    font-size: 12px;
+    color: #8B8B94;                   /* gris medio: texto secundario sobre oscuro */
+}
+
+
+/* ---------- 2.2 Títulos de grupo: GESTIÓN, MONITORIZACIÓN, EMPRESA ---------- */
+.sidebar-grupo {
+    padding: 16px 12px 4px;           /* más espacio arriba: separa un grupo del anterior */
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;        /* en el HTML pone "Gestión", se pinta "GESTIÓN" */
+    color: #8B8B94;
+}
+
+
+/* ---------- 2.3 Enlaces del menú ---------- */
+
+/* Cada enlace es una "fila" de 42px de alto, cómoda de pulsar */
+.sidebar-enlace {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 12px;
+    border-radius: 10px;
+    color: #D4D4D8;                   /* pisamos el índigo general de los enlaces */
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Al pasar el ratón: fondo algo más claro y texto blanco (sin subrayado) */
+.sidebar-enlace:hover {
+    background: #2A2A30;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+/* La página en la que estamos */
+.sidebar-enlace.activo {
+    background: #33333A;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+
+/* ---------- 2.4 Pie del sidebar: "Ver como usuario" y "Cerrar sesión" ----------
+   margin-top: auto → en un flex en columna, empuja este bloque
+   hasta el fondo del sidebar (ocupa todo el hueco libre por arriba). */
+.sidebar-pie {
+    margin-top: auto;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-top: 1px solid #2E2E33;
+}
+
+
+/* =========================================================
+   3. BARRA SUPERIOR (título de la página + admin conectado)
+   ========================================================= */
+
+/* sticky + top: 0 → se queda pegada arriba al hacer scroll (como en la portada).
+   z-index: 10 → por encima del contenido cuando pasa por debajo. */
+.admin-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: 68px;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--color-superficie);
+    border-bottom: 1px solid var(--color-borde);
+}
+
+
+/* ---------- 3.1 Migas de pan + título ----------
+   flex-grow: 1 → ocupa todo el hueco y empuja al admin hasta la derecha. */
+.admin-titulo {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* "Inicio / Dashboard": pequeño y gris, dice dónde estás */
+.admin-migas {
+    font-size: 12px;
+    color: var(--color-texto-sec);
+}
+
+.admin-titulo h1 {
+    font-size: 19px;
+    font-weight: 800;
+}
+
+
+/* ---------- 3.2 Admin conectado: avatar + nombre + "Administrador" ---------- */
+.admin-usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Círculo con la inicial (el de la portada está en inicio.css, que aquí no se carga) */
+.admin-usuario .avatar {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: var(--color-primario);
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-usuario-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-usuario-nombre {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.admin-usuario-rol {
+    font-size: 12px;
+    color: var(--color-texto-sec);
+}
+
+
+/* =========================================================
+   4. CONTENIDO
+   ========================================================= */
+
+/* Todas las secciones del dashboard en columna, con 20px entre ellas */
+.admin-contenido {
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* ---------- 4.1 Las 4 tarjetas de resumen ----------
+   display: grid → una REJILLA (filas y columnas), en vez de flex (una sola línea).
+   grid-template-columns: repeat(4, 1fr) → 4 columnas iguales.
+   "1fr" = "una fracción" del espacio libre: las 4 se reparten el ancho a partes iguales. */
+.resumen {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+/* Cada tarjeta: etiqueta arriba, número grande abajo */
+.resumen-tarjeta {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: 14px;
+}
+
+.resumen-etiqueta {
+    font-size: 13px;
+    color: var(--color-texto-sec);
+}
+
+.resumen-numero {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* El "· 2 online" que va al lado del número de puertas: más pequeño y gris */
+.resumen-numero small {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-texto-sec);
+}
+
+
+/* ---------- 4.2 Fila de dos columnas: tabla (ancha) + estado de puertas (estrecha) ----------
+   grid con "2fr 1fr" → la primera columna mide el DOBLE que la segunda.
+   align-items: start → cada panel mide lo que necesita su contenido
+   (sin esto, el más bajo se estiraría hasta igualar al más alto). */
+.admin-fila {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+
+/* =========================================================
+   5. PANELES (cajas blancas con cabecera)
+   Los usan la tabla, el estado de puertas y Grafana.
+   ========================================================= */
+
+/* overflow: hidden → lo de dentro respeta las esquinas redondeadas */
+.panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: 14px;
+}
+
+/* Cabecera: título a la izquierda, botón o enlace a la derecha */
+.panel-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;   /* uno a cada extremo */
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.panel-cabecera h2 {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+/* Botón más bajo que el normal (48px), para cabeceras y barras.
+   Se usa junto a .btn: class="btn btn-primario btn-pequeno" */
+.btn-pequeno {
+    min-height: 40px;
+    padding: 0 14px;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   6. TABLA DE USUARIOS
+   ========================================================= */
+
+/* border-collapse: collapse → los bordes de celdas contiguas se "funden" en uno.
+   Sin esto, cada celda tiene su propio borde y salen líneas dobles. */
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+/* Celdas de título (USUARIO, ROL…): pequeñas, grises y en mayúsculas */
+.tabla th {
+    padding: 10px 12px;
+    text-align: left;                 /* por defecto los <th> van centrados */
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-texto-sec);
+}
+
+/* Celdas normales, con una línea fina encima para separar las filas */
+.tabla td {
+    padding: 12px;
+    border-top: 1px solid var(--color-neutro-fondo);
+    vertical-align: middle;           /* contenido centrado en vertical */
+}
+
+/* Primera y última columna con más margen, alineadas con la cabecera del panel (20px).
+   :first-child = el primer hijo; :last-child = el último. */
+.tabla th:first-child,
+.tabla td:first-child {
+    padding-left: 20px;
+}
+
+.tabla th:last-child,
+.tabla td:last-child {
+    padding-right: 20px;
+}
+
+/* Columna de acciones: botones a la derecha y sin partirse en dos líneas */
+.tabla-acciones {
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Nombre + email uno encima del otro */
+.tabla-usuario {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabla-usuario-nombre {
+    font-weight: 700;
+}
+
+.tabla-usuario-email {
+    font-size: 12px;
+    color: var(--color-texto-sec);
+}
+
+/* "● Activo" / "● Suspendido": que el punto y la palabra no se separen en dos líneas */
+.tabla .texto-ok,
+.tabla .texto-aviso {
+    white-space: nowrap;
+}
+
+
+/* ---------- 6.1 Píldoras de rol (las de estado están en base.css) ---------- */
+.pill-admin {                         /* índigo: admin */
+    background: var(--color-primario-suave);
+    color: var(--color-primario);
+}
+
+/* .pill-neutra (gris) está en base.css: la usan también las páginas del cliente */
+
+
+/* ---------- 6.2 Etiquetas de puertas ("Trastero 28", "Garaje"…) ----------
+   flex-wrap: wrap → si no caben en una línea, bajan a la siguiente. */
+.etiquetas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.etiqueta {
+    padding: 3px 8px;
+    border: 1px solid var(--color-borde);
+    border-radius: 6px;               /* esquinas poco redondeadas: se distinguen de las píldoras */
+    background: var(--color-fondo);
+    font-size: 12px;
+    white-space: nowrap;              /* "Puerta principal" no se parte en dos líneas */
+}
+
+
+/* ---------- 6.3 Botones de la tabla (Editar / Suspender) ---------- */
+.btn-tabla {
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    background: var(--color-superficie);
+    color: var(--color-texto);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-tabla:hover {
+    background: var(--color-fondo);
+}
+
+/* Acción "peligrosa" (suspender): en rojo */
+.btn-tabla-peligro {
+    color: var(--color-error);
+}
+
+.btn-tabla-peligro:hover {
+    background: var(--color-error-fondo);
+}
+
+
+/* =========================================================
+   7. ESTADO DE PUERTAS (lista nombre ↔ píldora)
+   ========================================================= */
+
+/* Quitamos los puntos y la sangría de la lista */
+.lista-puertas {
+    margin: 0;
+    padding: 6px 20px;
+    list-style: none;
+}
+
+/* Cada puerta: nombre a la izquierda, píldora a la derecha */
+.lista-puertas li {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid var(--color-neutro-fondo);
+}
+
+/* La última sin línea debajo (quedaría pegada al borde del panel) */
+.lista-puertas li:last-child {
+    border-bottom: 0;
+}
+
+.lista-puertas-nombre {
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   8. GRAFANA (hueco reservado hasta que lo incrustemos)
+   Borde discontinuo (dashed) = "aquí irá algo".
+   ========================================================= */
+.grafana-hueco {
+    min-height: 260px;
+    margin: 16px 20px 20px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;          /* texto centrado en el hueco */
+    border: 2px dashed var(--color-borde-input);
+    border-radius: 12px;
+    color: var(--color-texto-sec);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+/* =========================================================
+   9. PIEZAS QUE SOLO SE USAN EN MÓVIL/TABLET
+   Aquí se definen OCULTAS. Los @media de abajo las muestran.
+   ========================================================= */
+
+/* Botón hamburguesa: en PC no hace falta (el sidebar siempre está visible) */
+.btn-menu {
+    display: none;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--color-texto);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-menu:hover {
+    background: var(--color-fondo);
+}
+
+/* Fondo oscuro detrás del sidebar abierto en móvil */
+.sidebar-fondo {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    background: rgba(22, 22, 29, 0.45);
+}
+
+/* Envoltorio de la tabla: si la tabla es más ancha que la caja,
+   aparece una barra de scroll lateral SOLO aquí dentro. */
+.tabla-scroll {
+    overflow-x: auto;
+}
+
+
+/* =========================================================
+   10. TABLET Y PORTÁTIL PEQUEÑO (1100px o menos)
+   Las 4 tarjetas pasan a 2 columnas, y la tabla y el estado
+   de puertas se ponen uno debajo del otro.
+   ========================================================= */
+@media (max-width: 1100px) {
+
+    .resumen {
+        grid-template-columns: repeat(2, 1fr);   /* 2 + 2 */
+    }
+
+    .admin-fila {
+        grid-template-columns: 1fr;              /* una sola columna */
+    }
+}
+
+
+/* =========================================================
+   11. MÓVIL Y TABLET VERTICAL (860px o menos)
+   El sidebar deja de estar fijo a la izquierda: se esconde
+   fuera de la pantalla y se abre con la hamburguesa.
+   (Misma técnica que el menú lateral del usuario.)
+   ========================================================= */
+@media (max-width: 860px) {
+
+    /* --- Sidebar como panel deslizante ---
+       position: fixed → flota encima de la página.
+       translateX(-100%) → escondido justo fuera, por la izquierda. */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        z-index: 30;                     /* por encima del fondo oscuro (20) */
+        max-width: 85vw;
+        transform: translateX(-100%);
+        visibility: hidden;
+        transition: transform 0.25s ease, visibility 0.25s;
+    }
+
+    /* Abierto: cuando el <body> tiene la clase "menu-abierto" (la pone admin.js) */
+    body.menu-abierto .sidebar {
+        transform: translateX(0);
+        visibility: visible;
+    }
+
+    body.menu-abierto .sidebar-fondo {
+        display: block;
+    }
+
+    /* La hamburguesa aparece */
+    .btn-menu {
+        display: flex;
+    }
+
+    /* Menos margen a los lados: en móvil cada píxel cuenta */
+    .admin-topbar {
+        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .admin-contenido {
+        padding: 16px;
+        gap: 16px;
+    }
+}
+
+
+/* =========================================================
+   12. MÓVIL ESTRECHO (560px o menos)
+   ========================================================= */
+@media (max-width: 560px) {
+
+    /* Solo el círculo con la inicial: el nombre y "Administrador" no caben */
+    .admin-usuario-texto {
+        display: none;
+    }
+
+    /* Número de las tarjetas algo más pequeño */
+    .resumen-numero {
+        font-size: 22px;
+    }
+}
+
+
+/* =========================================================
+   13. BARRA DE HERRAMIENTAS (buscador + filtros + botón)
+   Se usa encima de las tablas: Usuarios, Puertas, Historial…
+   ========================================================= */
+
+/* flex-wrap: wrap → en pantallas estrechas, lo que no cabe baja a otra línea */
+.herramientas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Caja del buscador: lupa + input dentro de un mismo "marco" */
+.buscador {
+    flex-grow: 1;                     /* ocupa todo el ancho que sobre */
+    min-width: 220px;                 /* pero nunca más estrecho que esto */
+    height: 42px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--color-borde-input);
+    border-radius: 10px;
+    background: var(--color-superficie);
+    color: var(--color-texto-sec);    /* color de la lupa */
+}
+
+/* El input va "desnudo" (sin borde propio): el borde lo pone .buscador */
+.buscador input {
+    flex-grow: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--color-texto);
+    font-size: 14px;
+}
+
+/* :focus-within = cuando el input DE DENTRO tiene el foco, se marca la caja entera */
+.buscador:focus-within {
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px var(--color-primario-suave);
+}
+
+/* Desplegables (<select>) con el mismo aspecto que el buscador */
+.selector {
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid var(--color-borde-input);
+    border-radius: 10px;
+    background: var(--color-superficie);
+    color: var(--color-texto);
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.selector:focus {
+    outline: none;
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px var(--color-primario-suave);
+}
+
+
+/* ---------- 13.1 Extras de tabla ---------- */
+
+/* Botón "Reactivar": en verde (acción positiva) */
+.btn-tabla-ok {
+    color: var(--color-ok);
+}
+
+.btn-tabla-ok:hover {
+    background: var(--color-ok-fondo);
+}
+
+/* Mensaje "No hay usuarios que coincidan…" */
+.tabla-vacia {
+    padding: 32px 20px;
+    text-align: center;
+    color: var(--color-texto-sec);
+}
+
+
+/* =========================================================
+   14. PIEZAS DE LAS PÁGINAS DEL BLOQUE B
+   (Comunicados, Ajustes, Estado de red…)
+   ========================================================= */
+
+/* Zona de texto dentro de un panel (debajo de la cabecera) */
+.panel-cuerpo {
+    padding: 16px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Línea pequeña de "fecha · autor" */
+.panel-pie-texto {
+    font-size: 13px;
+}
+
+/* Fila de botones al final de un panel */
+.panel-acciones {
+    display: flex;
+    gap: 6px;
+}
+
+/* Empuja un botón al extremo derecho dentro de un flex (como en la barra de herramientas) */
+.btn-derecha {
+    margin-left: auto;
+}
+
+/* Número de tarjeta que es texto largo (una fecha): más pequeño para que quepa */
+.resumen-numero-pequeno {
+    font-size: 16px;
+}
+
+/* Etiqueta del código PLC + nombre, en la misma línea con espacio */
+.lista-puertas-nombre {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* ---------- 14.1 Lista de datos "Nombre: Dani" (<dl>) ----------
+   <dl> = lista, <dt> = el nombre del dato, <dd> = el valor.
+   grid de 2 columnas: nombre a la izquierda, valor a la derecha.
+   "max-content" = la primera columna mide lo que su texto más largo. */
+.datos {
+    margin: 0;
+    padding: 16px 20px 20px;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 10px 24px;                   /* 10px entre filas, 24px entre columnas */
+    font-size: 14px;
+}
+
+.datos dt {
+    color: var(--color-texto-sec);
+}
+
+.datos dd {
+    margin: 0;                        /* los <dd> traen sangría de serie */
+    font-weight: 600;
+}
+
+
+/* Un enlace con aspecto de botón de tabla ("Gestionar" en el dashboard) */
+a.btn-tabla {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-texto);
+    text-decoration: none;
+}

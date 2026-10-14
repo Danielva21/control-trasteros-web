@@ -1,0 +1,418 @@
+/* =========================================================
+   base.css — estilos comunes a TODA la web
+   ========================================================= */
+
+
+/* ---------- 1. Variables (la paleta del CLAUDE.md) ----------
+   :root = la raíz de la página. Lo que se define aquí se puede
+   usar en cualquier CSS escribiendo var(--nombre).
+   Si un color cambia, se cambia solo aquí. */
+:root {
+    --color-primario:       #4338CA;  /* índigo: botones, enlaces */
+    --color-primario-hover: #3730A3;  /* índigo más oscuro, al pasar el ratón */
+    --color-primario-suave: #EEF0FF;  /* fondo suave del primario */
+
+    --color-texto:          #16161D;  /* texto principal */
+    --color-texto-sec:      #5B5F6B;  /* texto secundario (gris) */
+    --color-borde:          #E4E6EB;  /* bordes de tarjetas */
+    --color-borde-input:    #D5D8DE;  /* bordes de inputs (algo más oscuro para que se vean) */
+    --color-fondo:          #F4F5F7;  /* fondo de la página */
+    --color-superficie:     #FFFFFF;  /* fondo de tarjetas */
+    --color-sidebar:        #1C1C1F;  /* fondo del menú oscuro del panel admin */
+
+    /* Colores de estado (texto + fondo). Paleta del CLAUDE.md */
+    --color-ok:             #15803D;  /* verde: cerrada / correcto */
+    --color-ok-fondo:       #E7F6EC;
+    --color-aviso:          #B45309;  /* naranja: abierta / aviso */
+    --color-aviso-fondo:    #FEF3E2;
+    --color-error:          #B91C1C;  /* rojo: sin conexión / error */
+    --color-error-fondo:    #FDECEC;
+    --color-neutro:         #3F434D;  /* gris: neutro / sin datos */
+    --color-neutro-fondo:   #EEEFF2;  /* también para líneas finas entre filas */
+
+    --fuente: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+
+/* ---------- 2. Reset básico ---------- */
+
+/* Hace que el padding y el borde queden DENTRO del ancho de cada caja.
+   Sin esto, un input de 300px con 14px de padding mediría 328px. */
+* {
+    box-sizing: border-box;
+}
+
+/* Estilo general de la página: aquí se aplica la fuente a todo */
+body {
+    margin: 0;                        /* el navegador pone 8px por defecto */
+    font-family: var(--fuente);       /* Plus Jakarta Sans */
+    color: var(--color-texto);
+    background: var(--color-fondo);
+}
+
+/* Títulos y párrafos traen márgenes de serie (arriba y abajo).
+   Los quitamos para controlar nosotros el espacio con "gap" y "padding". */
+h1,
+h2,
+p {
+    margin: 0;
+}
+
+/* Las imágenes, por defecto, se comportan como texto (dejan un hueco debajo).
+   display:block lo quita. max-width:100% evita que se salgan de su caja. */
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* Enlaces: índigo, en seminegrita y sin subrayado... */
+a {
+    color: var(--color-primario);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* ...y el subrayado solo aparece al pasar el ratón, para que se note que es clicable */
+a:hover {
+    text-decoration: underline;
+}
+
+/* Los inputs y botones NO heredan la fuente del body por defecto
+   (el navegador les pone la suya). "inherit" = usa la del padre. */
+input,
+button {
+    font: inherit;
+}
+
+
+/* ---------- 3. Botones ----------
+   .btn          = forma común de todos los botones
+   .btn-primario = el color. Así mañana podemos tener .btn-secundario, .btn-peligro...
+   En el HTML se ponen las dos: class="btn btn-primario" */
+.btn {
+    min-height: 48px;                 /* zona táctil cómoda en el móvil (mínimo 44px) */
+    padding: 0 20px;
+    border: 0;                        /* quitamos el borde gris del navegador */
+    border-radius: 10px;              /* esquinas redondeadas */
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;                  /* manita al pasar el ratón */
+}
+
+.btn-primario {
+    background: var(--color-primario);
+    color: #FFFFFF;
+}
+
+/* :hover = cuando el ratón está encima */
+.btn-primario:hover {
+    background: var(--color-primario-hover);
+}
+
+
+/* ---------- 4. Campos de formulario ---------- */
+
+/* Caja de etiqueta + input: uno encima del otro con 8px de separación.
+   display:flex + flex-direction:column = colocar los hijos en columna. */
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;                         /* espacio entre los hijos */
+}
+
+/* ".campo label" = los <label> que estén DENTRO de un .campo */
+.campo label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.campo input {
+    height: 46px;
+    padding: 0 14px;                  /* 0 arriba/abajo, 14px izquierda/derecha */
+    border: 1px solid var(--color-borde-input);
+    border-radius: 10px;
+    background: var(--color-superficie);
+    font-size: 15px;
+}
+
+/* :focus = cuando el usuario está escribiendo en el campo.
+   Quitamos el contorno azul del navegador y ponemos el nuestro:
+   borde índigo + halo suave. Importante para quien usa teclado. */
+.campo input:focus {
+    outline: none;
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px var(--color-primario-suave);
+}
+
+/* Checkbox + su texto en la misma línea (flex en fila, que es lo normal) */
+.campo-check {
+    display: flex;
+    align-items: center;              /* centrados en vertical */
+    gap: 10px;
+}
+
+.campo-check input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--color-primario);  /* el check marcado sale en índigo */
+}
+
+.campo-check label {
+    font-size: 14px;
+    color: var(--color-texto-sec);
+}
+
+
+/* ---------- 5. Píldoras de estado ----------
+   Etiqueta pequeña y redondeada: "Cerrada", "Abierta", "Sin conexión".
+   Igual que los botones: .pill = la forma, .pill-ok / -aviso / -error = el color.
+   En el HTML: class="pill pill-ok" */
+.pill {
+    flex-shrink: 0;                   /* dentro de un flex, que no se aplaste */
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.pill-ok {                            /* verde: cerrada / todo bien */
+    background: var(--color-ok-fondo);
+    color: var(--color-ok);
+}
+
+.pill-aviso {                         /* naranja: abierta / aviso */
+    background: var(--color-aviso-fondo);
+    color: var(--color-aviso);
+}
+
+.pill-neutra {                        /* gris: neutro / sin datos / usuario normal */
+    background: var(--color-neutro-fondo);
+    color: var(--color-neutro);
+}
+
+.pill-error {                         /* rojo: sin conexión / error */
+    background: var(--color-error-fondo);
+    color: var(--color-error);
+}
+
+
+/* ---------- 6. Colores de texto ----------
+   Clases pequeñas para colorear un texto suelto sin crear una clase nueva
+   cada vez. Ej: <span class="texto-ok">● Activo</span> */
+.texto-sec   { color: var(--color-texto-sec); }
+.texto-ok    { color: var(--color-ok); font-weight: 600; }   /* verde */
+.texto-aviso { color: var(--color-aviso); font-weight: 600; }   /* naranja */
+.texto-error { color: var(--color-error); font-weight: 600; }   /* rojo */
+
+
+/* ---------- 7. Solo para lectores de pantalla ----------
+   Oculta un elemento A LA VISTA pero lo deja para los lectores de pantalla
+   (personas ciegas). Se usa en <label> de campos que ya se entienden por
+   el diseño (un buscador con lupa), para que sigan siendo accesibles.
+   No usamos display:none porque eso lo oculta también al lector. */
+.solo-lectores {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+
+/* ---------- 8. Botones que en realidad son enlaces <a class="btn"> ----------
+   Un <a> por defecto es "texto en línea". inline-flex lo convierte en
+   una caja como un botón, con el texto centrado. */
+a.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+a.btn-primario,
+a.btn-primario:hover {
+    color: #FFFFFF;
+}
+
+
+/* ---------- 9. Mensajes tras una acción ("Usuario creado", errores…) ---------- */
+.flash {
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.flash-ok {
+    background: var(--color-ok-fondo);
+    color: var(--color-ok);
+}
+
+.flash-error {
+    background: var(--color-error-fondo);
+    color: var(--color-error);
+}
+
+
+/* ---------- 10. Ventanas emergentes (<dialog>) ----------
+   <dialog> es una etiqueta de HTML hecha para ventanas emergentes.
+   El JS la abre con .showModal(): se pone encima de todo y el resto
+   de la página queda bloqueado detrás. ::backdrop = el fondo de detrás. */
+.ventana {
+    width: min(480px, calc(100vw - 32px));   /* 480px, o el ancho de la pantalla menos 16px por lado */
+    max-height: calc(100vh - 32px);
+    padding: 0;
+    border: 0;
+    border-radius: 16px;
+    background: var(--color-superficie);
+    color: var(--color-texto);
+    box-shadow: 0 24px 64px rgba(22, 22, 29, 0.25);
+}
+
+.ventana::backdrop {
+    background: rgba(22, 22, 29, 0.45);
+}
+
+
+/* ---------- 11. Formularios (dentro de las ventanas o en la página) ---------- */
+.formulario {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.formulario h2 {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+/* Texto de ayuda debajo de un campo ("Mínimo 8 caracteres") */
+.ayuda {
+    font-size: 12px;
+    color: var(--color-texto-sec);
+}
+
+/* Los <select> y <textarea> con el mismo aspecto que los inputs (.campo input) */
+.campo select,
+.campo textarea {
+    padding: 10px 14px;
+    border: 1px solid var(--color-borde-input);
+    border-radius: 10px;
+    background: var(--color-superficie);
+    color: var(--color-texto);
+    font: inherit;
+    font-size: 15px;
+}
+
+.campo select {
+    height: 46px;
+    padding: 0 14px;
+}
+
+.campo textarea {
+    min-height: 120px;
+    resize: vertical;                 /* que solo se pueda estirar hacia abajo */
+}
+
+.campo select:focus,
+.campo textarea:focus {
+    outline: none;
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px var(--color-primario-suave);
+}
+
+/* Fila de botones al final del formulario: Cancelar | Guardar, a la derecha */
+.formulario-botones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Botón secundario (Cancelar): blanco con borde */
+.btn-secundario {
+    background: var(--color-superficie);
+    color: var(--color-texto);
+    border: 1px solid var(--color-borde-input);
+}
+
+.btn-secundario:hover {
+    background: var(--color-fondo);
+}
+
+/* Formularios "en línea" (un solo botón, como Suspender): que no rompan la fila */
+.form-en-linea {
+    display: inline;
+}
+
+
+/* =========================================================
+   12. MODO OSCURO
+   Cuando la etiqueta <html> tiene data-tema="oscuro" (lo pone
+   assets/js/tema.js), se CAMBIAN LOS VALORES de las variables.
+   Como todos los CSS usan var(--color-…), la web entera cambia
+   de color sin tocar nada más. Esa es la ventaja de las variables.
+   ========================================================= */
+
+html[data-tema="oscuro"] {
+    --color-primario:       #6366F1;  /* índigo más claro: se ve bien sobre fondo oscuro */
+    --color-primario-hover: #4F46E5;
+    --color-primario-suave: #25264A;
+
+    --color-texto:          #ECECF1;
+    --color-texto-sec:      #A1A4AE;
+    --color-borde:          #2A2C35;
+    --color-borde-input:    #3A3D48;
+    --color-fondo:          #0F1014;
+    --color-superficie:     #18191F;
+    --color-sidebar:        #0B0B0E;
+
+    --color-ok:             #4ADE80;
+    --color-ok-fondo:       #11301E;
+    --color-aviso:          #FBBF24;
+    --color-aviso-fondo:    #3A2A0E;
+    --color-error:          #F87171;
+    --color-error-fondo:    #3B1515;
+    --color-neutro:         #C9CBD3;
+    --color-neutro-fondo:   #2A2C35;
+
+    /* Le dice al navegador que use sus controles en versión oscura
+       (barras de scroll, calendario del <input type="date">, checkboxes…) */
+    color-scheme: dark;
+}
+
+
+/* ---------- 12.1 Botón de cambiar el tema (luna / sol) ----------
+   Lleva los DOS iconos dentro; el CSS enseña uno u otro:
+   en modo claro se ve la luna ("pasar a oscuro"), en oscuro el sol. */
+.btn-tema {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--color-texto);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-tema:hover {
+    background: var(--color-fondo);
+}
+
+.btn-tema .icono-sol {
+    display: none;
+}
+
+html[data-tema="oscuro"] .btn-tema .icono-sol {
+    display: block;
+}
+
+html[data-tema="oscuro"] .btn-tema .icono-luna {
+    display: none;
+}

@@ -1,0 +1,20 @@
+# =========================================================
+# .gitignore — archivos que git NO debe guardar nunca
+# =========================================================
+
+# Credenciales (contraseña de la BD y token de Node-RED).
+# En git va la plantilla: web/includes/config.ejemplo.php
+web/includes/config.php
+
+# Interruptor del simulador para fingir que el PLC no responde
+simulador/APAGADO
+
+# Ajustes locales de Claude Code (de cada ordenador)
+.claude/settings.local.json
+
+# Archivos del sistema y de editores
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+.vscode/

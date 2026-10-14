@@ -1,0 +1,531 @@
+/* =========================================================
+   inicio.css — estilos SOLO de la portada del usuario (inicio.php)
+   Pensado primero para el MÓVIL.
+   ========================================================= */
+
+
+/* ---------- 1. Barra superior ---------- */
+
+/* position: sticky + top: 0 → al hacer scroll, la barra se queda
+   pegada arriba de la pantalla en vez de irse con el contenido.
+   z-index: 10 → por encima de las tarjetas cuando pasan por debajo. */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    height: 64px;
+    padding: 0 12px;
+    display: flex;                    /* los 4 elementos en fila */
+    align-items: center;              /* centrados en vertical */
+    gap: 8px;
+    background: var(--color-superficie);
+    border-bottom: 1px solid var(--color-borde);
+}
+
+/* Botones que son solo un icono (menú y campana).
+   44x44 = zona táctil mínima para el dedo. */
+.btn-icono {
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;          /* sin fondo: solo se ve el icono */
+    color: var(--color-texto);        /* el SVG toma este color (currentColor) */
+    display: flex;
+    align-items: center;
+    justify-content: center;          /* icono centrado en el botón */
+    cursor: pointer;
+}
+
+.btn-icono:hover {
+    background: var(--color-fondo);   /* gris suave al pasar el ratón */
+}
+
+/* El título "crece" y ocupa todo el hueco libre.
+   Así empuja la campana y el avatar hasta el borde derecho. */
+.topbar-titulo {
+    flex-grow: 1;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* La campana es la "referencia" para colocar encima el numerito */
+.btn-notificaciones {
+    position: relative;
+}
+
+/* Numerito rojo de avisos sin leer.
+   position: absolute → se coloca respecto a la campana (su padre "relative"),
+   en la esquina de arriba a la derecha. */
+.contador {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 999px;             /* círculo / píldora */
+    background: var(--color-error);              /* rojo de la paleta */
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Círculo con la inicial del usuario */
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background: var(--color-primario);
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ---------- 2. Contenido principal ---------- */
+
+/* Columna con todas las tarjetas.
+   max-width + margin auto → en PC no se estira a lo ancho, queda centrada
+   y con ancho de "móvil grande", que es más cómodo de leer. */
+.contenido {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;                        /* espacio entre tarjetas */
+}
+
+
+/* ---------- 2.1 Tarjeta de saludo ---------- */
+.saludo {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: 16px;
+}
+
+.saludo h1 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+/* El nombre del usuario, en índigo */
+.saludo-nombre {
+    color: var(--color-primario);
+}
+
+.saludo p {
+    font-size: 14px;
+    color: var(--color-texto-sec);
+}
+
+
+/* (Los estados del botón de abrir están en el apartado 2.2, junto a .btn-abrir) */
+
+
+/* ---------- 2.2 Sección "TUS PUERTAS" ---------- */
+
+/* Las tarjetas de puerta una debajo de otra, con 12px entre ellas */
+.puertas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Título pequeño en mayúsculas.
+   En el HTML pone "Tus puertas": text-transform lo pasa a mayúsculas
+   solo al pintarlo (el texto real no cambia). */
+.seccion-titulo {
+    padding-left: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;           /* letras separadas: típico de títulos en mayúsculas */
+    text-transform: uppercase;
+    color: var(--color-texto-sec);
+}
+
+/* Tarjeta de cada puerta: cabecera arriba y botón abajo */
+.puerta {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(22, 22, 29, 0.05);   /* sombra muy suave */
+}
+
+/* Fila: icono | nombre + ubicación | píldora */
+.puerta-cabecera {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Cuadrado índigo claro con el candado */
+.puerta-icono {
+    flex-shrink: 0;                   /* que no se estreche si el nombre es largo */
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--color-primario-suave);
+    color: var(--color-primario);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Nombre y ubicación uno encima del otro.
+   flex-grow: 1 → ocupa el hueco del medio y empuja la píldora a la derecha. */
+.puerta-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.puerta-nombre {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.puerta-ubicacion {
+    font-size: 13px;
+    color: var(--color-texto-sec);
+}
+
+/* Botón de abrir: algo más alto que un botón normal, fácil de pulsar.
+   No hace falta width:100%: en un flex en columna los hijos ya ocupan todo el ancho. */
+.btn-abrir {
+    position: relative;               /* para colocar dentro la barra de progreso (::before) */
+    overflow: hidden;                 /* la barra no se sale de las esquinas redondeadas */
+    min-height: 52px;
+    border-radius: 12px;
+    user-select: none;                /* que al mantener pulsado no se seleccione el texto */
+    -webkit-user-select: none;
+    touch-action: manipulation;       /* en el móvil, sin zoom ni menú al mantener pulsado */
+    -webkit-touch-callout: none;
+}
+
+/* El texto, por encima de la barra de progreso */
+.btn-abrir-texto {
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- Barra de "mantén pulsado" ----------
+   ::before = un elemento "fantasma" que crea el CSS dentro del botón.
+   Empieza con ancho 0. Mientras se mantiene pulsado (clase .pulsando,
+   la pone inicio.js), crece hasta el 100% en 1 segundo (transition). */
+.btn-abrir::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 0;
+    background: rgba(255, 255, 255, 0.25);   /* blanco semitransparente sobre el índigo */
+}
+
+.btn-abrir.pulsando::before {
+    width: 100%;
+    transition: width 1s linear;      /* SOLO al pulsar: al soltar vuelve a 0 de golpe */
+}
+
+/* ---------- Estados del botón (los pone inicio.js según el estado real) ---------- */
+
+/* Deshabilitado en general (comprobando, sin conexión…): gris */
+.btn-abrir:disabled {
+    background: var(--color-neutro-fondo);
+    color: var(--color-texto-sec);
+    cursor: not-allowed;
+}
+
+/* Abriendo / Abierta: naranja (paleta: abierta / aviso) */
+.btn-abrir.btn-abierta:disabled {
+    background: var(--color-aviso-fondo);
+    color: var(--color-aviso);
+}
+
+/* Sin conexión: rojo suave (paleta: error) */
+.btn-abrir.btn-sin-conexion:disabled {
+    background: var(--color-error-fondo);
+    color: var(--color-error);
+}
+
+/* Mensaje de error debajo del botón ("No tienes permiso…") */
+.puerta-mensaje {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-error);
+    text-align: center;
+}
+
+
+/* ---------- 2.3 Aviso de la empresa ---------- */
+
+/* Icono a la izquierda, texto a la derecha.
+   align-items: flex-start → el icono se queda arriba aunque el texto ocupe varias líneas. */
+.aviso {
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: 16px;
+}
+
+.aviso-icono {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--color-primario-suave);
+    color: var(--color-primario);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aviso-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.aviso-texto h2 {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.aviso-texto p {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--color-texto-sec);
+}
+
+
+/* =========================================================
+   3. MENÚ LATERAL
+   Cerrado por defecto. Se abre cuando el <body> tiene la
+   clase "menu-abierto" (la pondrá/quitará inicio.js).
+   ========================================================= */
+
+/* ---------- 3.1 Fondo oscuro detrás del menú ----------
+   position: fixed + inset: 0 → cubre TODA la pantalla y no se mueve con el scroll.
+   Cerrado: display none (no existe a efectos visuales ni de clics). */
+.menu-fondo {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 20;                          /* por encima de la barra superior (10) */
+    background: rgba(22, 22, 29, 0.45);   /* negro semitransparente */
+}
+
+/* ---------- 3.2 El panel del menú ----------
+   Pegado al lado izquierdo, de arriba abajo.
+   transform: translateX(-100%) → lo mueve a la izquierda TODO su ancho,
+   o sea, justo fuera de la pantalla.
+   visibility: hidden → además, que no se pueda llegar con el tabulador estando cerrado.
+   transition → cuando cambie el transform, que lo haga en 0,25 s (efecto de deslizar). */
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 30;                          /* por encima del fondo oscuro (20) */
+    width: 280px;
+    max-width: 85vw;                      /* en móviles muy estrechos, como mucho el 85% del ancho */
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;                     /* si no cabe en alto, scroll dentro del menú */
+    background: var(--color-superficie);
+    box-shadow: 8px 0 32px rgba(22, 22, 29, 0.15);
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform 0.25s ease, visibility 0.25s;
+}
+
+/* ---------- 3.3 Estado ABIERTO ----------
+   "body.menu-abierto .menu-lateral" = el menú, cuando el body tiene la clase menu-abierto. */
+body.menu-abierto .menu-lateral {
+    transform: translateX(0);             /* vuelve a su sitio: entra deslizando */
+    visibility: visible;
+}
+
+body.menu-abierto .menu-fondo {
+    display: block;
+}
+
+/* ---------- 3.4 Cabecera: avatar + nombre/email + X ---------- */
+.menu-cabecera {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 0 16px;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.menu-usuario {
+    flex-grow: 1;                         /* empuja la X a la derecha */
+    min-width: 0;                         /* permite que el email se recorte si es largo */
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-usuario-nombre {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+/* Si el email no cabe, se corta con "..." en vez de romper el diseño */
+.menu-usuario-email {
+    font-size: 13px;
+    color: var(--color-texto-sec);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ---------- 3.5 Lista de enlaces ---------- */
+
+/* Quitamos los puntos y sangría que el navegador pone a las listas.
+   flex-grow: 1 → la lista ocupa todo el alto libre y empuja "Cerrar sesión" abajo. */
+.menu-lista {
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* Cada enlace es una "fila" alta y cómoda de tocar (44px mínimo) */
+.menu-enlace {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 12px;
+    border-radius: 10px;
+    color: var(--color-texto);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* Al pasar el ratón: fondo gris en vez del subrayado general de los enlaces */
+.menu-enlace:hover {
+    background: var(--color-fondo);
+    text-decoration: none;
+}
+
+/* La página en la que estamos: resaltada en índigo */
+.menu-enlace.activo {
+    background: var(--color-primario-suave);
+    color: var(--color-primario);
+}
+
+/* Cerrar sesión: en rojo y separado con una línea encima */
+.menu-salir {
+    color: var(--color-error);
+    border-top: 1px solid var(--color-borde);
+    border-radius: 0 0 10px 10px;
+    padding-top: 8px;
+}
+
+
+/* =========================================================
+   4. PÁGINAS INTERIORES DEL CLIENTE
+   (Mis trasteros, Historial, Comunicados, Normas, Soporte, Perfil)
+   ========================================================= */
+
+/* Título grande de la página ("Historial de accesos"…) */
+.pagina-titulo {
+    padding: 4px 4px 0;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+/* Tarjeta blanca genérica con título y contenido */
+.bloque {
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: 16px;
+}
+
+.bloque h2 {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.bloque p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Lista de filas dentro de un bloque: texto a la izquierda, dato o píldora a la derecha */
+.filas {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.filas li {
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid var(--color-neutro-fondo);
+}
+
+/* La primera fila sin línea encima (pegaría con el título) */
+.filas li:first-child {
+    border-top: 0;
+}
+
+/* Texto de la izquierda de una fila: principal + secundario uno encima del otro */
+.fila-texto {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.fila-principal {
+    font-weight: 700;
+}
+
+.fila-sec {
+    font-size: 13px;
+    color: var(--color-texto-sec);
+}
+
+
+/* La campana ahora es un enlace <a>: sin subrayado al pasar el ratón */
+a.btn-icono:hover {
+    text-decoration: none;
+}
+
+/* Enlace al pie del aviso de la portada ("Marcar como leído →") */
+.aviso-enlace {
+    margin-top: 4px;
+    font-size: 13px;
+}

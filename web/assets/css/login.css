@@ -1,0 +1,254 @@
+/* =========================================================
+   login.css — estilos SOLO de la pantalla de login (index.php)
+
+   Se escribe "mobile-first": primero cómo se ve en el MÓVIL
+   (una sola columna, sin foto) y al final, dentro de un
+   @media, lo que cambia en PANTALLAS GRANDES (dos columnas).
+   ========================================================= */
+
+
+/* ---------- 1. Contenedor general ---------- */
+
+/* display:flex coloca a sus hijos (panel y foto) uno AL LADO del otro.
+   min-height:100vh = como mínimo, todo el alto de la pantalla
+   (vh = "viewport height", 100vh = 100% del alto de la ventana). */
+.login {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* ---------- 2. Columna izquierda (marca + formulario + ayuda) ---------- */
+
+/* En móvil ocupa todo el ancho.
+   Sus hijos van en columna y "space-between" los reparte:
+   marca arriba, formulario en medio, ayuda abajo del todo. */
+.login-panel {
+    width: 100%;
+    min-height: 100vh;
+    padding: 32px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+/* La foto difuminada de fondo NO se ve en móvil (solo en PC, ver apartado 4) */
+.login-fondo {
+    display: none;
+}
+
+
+/* ---------- 2.1 Marca: icono + nombre ---------- */
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Cuadrado índigo con el candado centrado dentro */
+.marca-icono {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--color-primario);
+    color: #FFFFFF;                   /* el SVG usa "currentColor", o sea, este blanco */
+    display: flex;
+    align-items: center;              /* centra el icono en vertical */
+    justify-content: center;          /* centra el icono en horizontal */
+}
+
+/* Nombre y cliente uno encima del otro */
+.marca-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.marca-nombre {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.marca-cliente {
+    font-size: 13px;
+    color: var(--color-texto-sec);
+}
+
+
+/* ---------- 2.2 Tarjeta del formulario ---------- */
+
+/* max-width: en pantallas anchas no pasa de 420px.
+   margin: 0 auto → la centra horizontalmente (auto = mismo margen a cada lado). */
+.login-form {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;                        /* espacio entre cada bloque del formulario */
+    padding: 28px 20px;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(22, 22, 29, 0.06);  /* sombra muy suave */
+}
+
+/* Título + subtítulo */
+.login-cabecera {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.login-cabecera h1 {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;          /* letras un pelín más juntas: queda más compacto */
+}
+
+.login-cabecera p {
+    font-size: 15px;
+    color: var(--color-texto-sec);
+}
+
+/* "Contraseña" a la izquierda y "¿La has olvidado?" a la derecha, en la misma línea */
+.campo-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;            /* alinea los dos textos por su línea base */
+}
+
+.enlace-olvido {
+    font-size: 13px;
+}
+
+
+/* ---------- 2.3 Ayuda al pie ---------- */
+.login-ayuda {
+    font-size: 13px;
+    color: var(--color-texto-sec);
+    text-align: center;
+}
+
+
+/* ---------- 3. Columna derecha (foto) ---------- */
+
+/* En móvil NO se muestra: solo el formulario */
+.login-foto {
+    display: none;
+}
+
+
+/* =========================================================
+   4. PANTALLAS GRANDES (PC): a partir de 992px de ancho
+   Todo lo de aquí dentro SOLO se aplica si la ventana
+   mide 992px o más. Lo de arriba sigue valiendo; esto lo pisa.
+   ========================================================= */
+@media (min-width: 992px) {
+
+    /* --- Columna izquierda: ancho fijo de 560px --- */
+    .login-panel {
+        width: 560px;
+        flex-shrink: 0;                  /* que no se estreche aunque falte sitio */
+        padding: 56px 72px;
+        position: relative;              /* para colocar la foto difuminada dentro (ver abajo) */
+        overflow: hidden;                /* lo que se salga del panel, no se ve */
+    }
+
+    .login-form {
+        padding: 36px;
+    }
+
+    .login-ayuda {
+        text-align: left;
+    }
+
+    /* --- Foto difuminada detrás del formulario ---
+       position:absolute + inset:0 → la caja ocupa TODO el panel, por detrás.
+       filter:blur = desenfoque. opacity = casi transparente para que no moleste.
+       scale(1.2) = un poco más grande, para que el desenfoque no deje bordes blancos. */
+    .login-fondo {
+        display: block;
+        position: absolute;
+        inset: 0;
+        background-image: url('../img/producto.svg');  /* ruta relativa a ESTE archivo css */
+        background-size: cover;
+        background-position: center;
+        filter: blur(40px);
+        opacity: 0.25;
+        transform: scale(1.2);
+    }
+
+    /* Marca, formulario y ayuda por ENCIMA de la foto difuminada.
+       z-index solo funciona con elementos "posicionados" (position: relative). */
+    .marca,
+    .login-form,
+    .login-ayuda {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* --- Columna derecha: ocupa todo el resto del ancho --- */
+    .login-foto {
+        display: block;
+        flex-grow: 1;                    /* "crece" para llenar el hueco que queda */
+        position: relative;
+        margin: 24px;
+        border-radius: 20px;
+        overflow: hidden;                /* recorta la foto con las esquinas redondeadas */
+        background: #1E1B4B;             /* índigo oscuro, por si la foto tarda en cargar */
+    }
+
+    /* La foto rellena la columna entera.
+       object-fit:cover = rellena sin deformarse, recortando lo que sobre. */
+    .login-foto img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Eslogan pegado abajo, encima de la foto.
+       El degradado oscuro de abajo hace que el texto blanco se lea
+       aunque la foto sea clara. */
+    .login-eslogan {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6));
+    }
+
+    .eslogan-titulo {
+        max-width: 420px;
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: #FFFFFF;
+    }
+
+    .eslogan-texto {
+        font-size: 15px;
+        color: #E0E1FA;                  /* blanco con un toque índigo */
+    }
+}
+
+
+/* ---------- 5. Mensaje de error del login ----------
+   Rojo sobre rojo claro (paleta: sin conexión / error).
+   Va fuera del @media, así que vale para móvil y PC. */
+.login-error {
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--color-error-fondo);
+    color: var(--color-error);
+    font-size: 14px;
+    font-weight: 600;
+}
